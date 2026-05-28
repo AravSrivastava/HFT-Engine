@@ -46,7 +46,7 @@ class PriceLevel{
     void removeOrder(Torderid OrderId){
         for(auto it = Orders.begin(); it != Orders.end();){
             if((*it) -> OrderID == OrderId){
-                TotalQuantity -= (*it) -> OrderID;
+                TotalQuantity -= (*it) -> Quantity;
                 it = Orders.erase(it);
                 return;
             }else{
@@ -55,7 +55,7 @@ class PriceLevel{
         }
     }
     Order* front(){
-        return (Orders.empty())?Orders[0]:nullptr;
+        return (!Orders.empty())?Orders[0]:nullptr;
     }
 };
 
@@ -79,6 +79,8 @@ class OrderBook{
         }
     }
     void cancelOrder(Torderid orderID){
+        auto it  = orderMap.find(orderID);
         orderMap.erase(orderID);
     }
-}
+
+};
