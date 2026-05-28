@@ -79,8 +79,20 @@ class OrderBook{
         }
     }
     void cancelOrder(Torderid orderID){
-        auto it  = orderMap.find(orderID);
-        orderMap.erase(orderID);
+        auto it = orderMap.find(orderID);
+        // This is a sfaety check that checks whether the order exists or not.
+        if(it == orderMap.end())
+            return;
+
+        Order* cancelOrder = it -> second;
+        if(cancelOrder -> Side == Sides::Bids){
+            bids[cancelOrder -> Price].removeOrder(orderID);
+        }else{
+            asks[cancelOrder -> Price].removeOrder(orderID);
+        }
+        orderMap.erase(it);
+
     }
+
 
 };
